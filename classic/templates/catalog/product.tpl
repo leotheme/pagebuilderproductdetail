@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @copyright PrestaShop SA
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
@@ -35,17 +35,19 @@
   <meta property="og:site_name" content="{$shop.name}">
   <meta property="og:description" content="{$page.meta.description}">
   <meta property="og:image" content="{$product.cover.large.url}">
-  <meta property="product:pretax_price:amount" content="{$product.price_tax_exc}">
-  <meta property="product:pretax_price:currency" content="{$currency.iso_code}">
-  <meta property="product:price:amount" content="{$product.price_amount}">
-  <meta property="product:price:currency" content="{$currency.iso_code}">
+  {if $product.show_price}
+    <meta property="product:pretax_price:amount" content="{$product.price_tax_exc}">
+    <meta property="product:pretax_price:currency" content="{$currency.iso_code}">
+    <meta property="product:price:amount" content="{$product.price_amount}">
+    <meta property="product:price:currency" content="{$currency.iso_code}">
+  {/if}
   {if isset($product.weight) && ($product.weight != 0)}
   <meta property="product:weight:value" content="{$product.weight}">
   <meta property="product:weight:units" content="{$product.weight_unit}">
   {/if}
 {/block}
 
-{block name='content'}  
+{block name='content'}
 
   {if isset($product.productLayout) && $product.productLayout != ''}
     {hook h='displayLeoProfileProduct' product=$product typeProduct='detail'}
@@ -59,6 +61,14 @@
           {block name='page_content_container'}
             <section class="page-content" id="content">
               {block name='page_content'}
+              <!-- @todo: use include file='catalog/_partials/product-flags.tpl'} -->
+              {block name='product_flags'}
+                <ul class="product-flags">
+                  {foreach from=$product.flags item=flag}
+                    <li class="product-flag {$flag.type}">{$flag.label}</li>
+                  {/foreach}
+                </ul>
+              {/block}
                 {block name='product_cover_thumbnails'}
                   {include file='catalog/_partials/product-cover-thumbnails.tpl'}
                 {/block}
@@ -109,7 +119,7 @@
                   {block name='product_pack'}
                     {if $packItems}
                       <section class="product-pack">
-                        <h3 class="h4">{l s='This pack contains' d='Shop.Theme.Catalog'}</h3>
+                        <p class="h4">{l s='This pack contains' d='Shop.Theme.Catalog'}</p>
                         {foreach from=$packItems item="product_pack"}
                           {block name='product_miniature'}
                             {include file='catalog/_partials/miniatures/pack-product.tpl' product=$product_pack}
@@ -131,9 +141,8 @@
                     {include file='catalog/_partials/product-additional-info.tpl'}
                   {/block}
 
-                  {block name='product_refresh'}
-                    <input class="product-refresh ps-hidden-by-js" name="refresh" type="submit" value="{l s='Refresh' d='Shop.Theme.Actions'}">
-                  {/block}
+                  {* Input to refresh product HTML removed, block kept for compatibility with themes *}
+                  {block name='product_refresh'}{/block}
                 </form>
               {/block}
             </div>
@@ -159,7 +168,7 @@
       {block name='product_accessories'}
         {if $accessories}
           <section class="product-accessories clearfix">
-            <h3 class="h5 products-section-title">{l s='You might also like' d='Shop.Theme.Catalog'}</h3>
+            <p class="h5 products-section-title">{l s='You might also like' d='Shop.Theme.Catalog'}</p>
             <div class="products">
               <div class="row">
                 {foreach from=$accessories item="product_accessory"}
