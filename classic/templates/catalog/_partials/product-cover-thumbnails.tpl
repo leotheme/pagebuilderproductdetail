@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @copyright PrestaShop SA
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
@@ -34,15 +34,19 @@
             {/foreach}
           </ul>
         {/block}
+	{if $product.cover}
         <img id="zoom_product" data-type-zoom="" class="js-qv-product-cover img-fluid" src="{$product.cover.bySize.large_default.url}" alt="{$product.cover.legend}" title="{$product.cover.legend}" itemprop="image">
         <div class="layer hidden-sm-down" data-toggle="modal" data-target="#product-modal">
           <i class="material-icons zoom-in">&#xE8FF;</i>
         </div>
+      {else}
+        <img src="{$urls.no_picture_image.bySize.large_default.url}" style="width:100%;">
+      {/if}
       </div>
     {/block}
 
     {block name='product_images'}
-      <div {if isset($language.is_rtl) && $language.is_rtl}dir="rtl"{/if} id="thumb-gallery" class="product-thumb-images">
+      <div id="thumb-gallery" class="product-thumb-images">
         {foreach from=$product.images item=image}
           <div class="thumb-container {if $image.id_image == $product.cover.id_image} active {/if}">
             <a  href="javascript:void(0)" data-image="{$image.bySize.large_default.url}" data-zoom-image="{$image.bySize.large_default.url}"> 
@@ -59,15 +63,14 @@
           </div>
         {/foreach}
       </div>
-      
-      {if $product.images|@count > 1}
-        <div class="arrows-product-fake slick-arrows">
-          <button class="slick-prev slick-arrow" aria-label="Previous" type="button" >{l s='Previous' d='Shop.Theme.Catalog'}</button>
-          <button class="slick-next slick-arrow" aria-label="Next" type="button">{l s='Next' d='Shop.Theme.Catalog'}</button>
-        </div>
-      {/if}
     {/block}
-    
+
+    {if $product.images|@count > 1}
+      <div class="arrows-product-fake slick-arrows">
+        <button class="slick-prev slick-arrow" aria-label="Previous" type="button" >{l s='Previous' d='Shop.Theme.Catalog'}</button>
+        <button class="slick-next slick-arrow" aria-label="Next" type="button">{l s='Next' d='Shop.Theme.Catalog'}</button>
+      </div>
+    {/if}
   {/block}
   {hook h='displayAfterProductThumbs'}
 </div>
