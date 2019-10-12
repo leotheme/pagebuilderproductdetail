@@ -1,3 +1,10 @@
+{* 
+* @Module Name: AP Page Builder
+* @Website: apollotheme.com - prestashop template provider
+* @author Apollotheme <apollotheme@gmail.com>
+* @copyright Apollotheme
+* @description: ApPageBuilder is module help you can build content for your shop
+*}
 {block name='product_accordion'}
 <div class="products-accordion" id="accordion" role="tablist" aria-multiselectable="true">
     {* Description Product Detail *}
@@ -29,85 +36,87 @@
       <div id="collapsedetails" class="collapse" role="tabpanel" aria-labelledby="headingdetails">
         <div class="card-block">
           <div data-product="{$product|json_encode}">
-            {block name='product_reference'}
-              {if isset($product_manufacturer->id)}
-                  <div class="product-manufacturer">
-                    {if isset($manufacturer_image_url)}
-                        <a href="{$product_brand_url}">
-                          <img src="{$manufacturer_image_url}" class="img img-thumbnail manufacturer-logo" />
-                        </a>
-                    {else}
-                        <label class="label">{l s='Brand' d='Shop.Theme.Catalog'}</label>
-                        <span>
-                          <a href="{$product_brand_url}">{$product_manufacturer->name}</a>
-                        </span>
-                    {/if}
-                  </div>
-              {/if}
-              {if isset($product.reference_to_display)}
-                  <div class="product-reference">
-                    <label class="label">{l s='Reference' d='Shop.Theme.Catalog'} </label>
-                    <span itemprop="sku">{$product.reference_to_display}</span>
-                  </div>
-              {/if}
-            {/block}
-            {block name='product_quantities'}
-                {if $product.show_quantities}
-                  <div class="product-quantities">
-                      <label class="label">{l s='In stock' d='Shop.Theme.Catalog'}</label>
-                      <span>{$product.quantity} {$product.quantity_label}</span>
-                  </div>
+            <div id="product-details"> 
+              {block name='product_reference'}
+                {if isset($product_manufacturer->id)}
+                    <div class="product-manufacturer">
+                      {if isset($manufacturer_image_url)}
+                          <a href="{$product_brand_url}">
+                            <img src="{$manufacturer_image_url}" class="img img-thumbnail manufacturer-logo" />
+                          </a>
+                      {else}
+                          <label class="label">{l s='Brand' d='Shop.Theme.Catalog'}</label>
+                          <span>
+                            <a href="{$product_brand_url}">{$product_manufacturer->name}</a>
+                          </span>
+                      {/if}
+                    </div>
                 {/if}
-            {/block}
-            {block name='product_availability_date'}
-                {if $product.availability_date}
-                  <div class="product-availability-date">
-                      <label>{l s='Availability date:' d='Shop.Theme.Catalog'} </label>
-                      <span>{$product.availability_date}</span>
+                {if isset($product.reference_to_display)}
+                    <div class="product-reference">
+                      <label class="label">{l s='Reference' d='Shop.Theme.Catalog'} </label>
+                      <span itemprop="sku">{$product.reference_to_display}</span>
+                    </div>
+                {/if}
+              {/block} 
+              {block name='product_quantities'}
+                  {if $product.show_quantities}
+                    <div class="product-quantities">
+                        <label class="label">{l s='In stock' d='Shop.Theme.Catalog'}</label>
+                        <span>{$product.quantity} {$product.quantity_label}</span>
+                    </div>
+                  {/if}
+              {/block}
+              {block name='product_availability_date'}
+                  {if $product.availability_date}
+                    <div class="product-availability-date">
+                        <label>{l s='Availability date:' d='Shop.Theme.Catalog'} </label>
+                        <span>{$product.availability_date}</span>
+                    </div>
+                  {/if}
+              {/block}
+              {block name='product_out_of_stock'}
+                  <div class="product-out-of-stock">
+                    {hook h='actionProductOutOfStock' product=$product}
                   </div>
-                {/if}
-            {/block}
-            {block name='product_out_of_stock'}
-                <div class="product-out-of-stock">
-                  {hook h='actionProductOutOfStock' product=$product}
-                </div>
-            {/block}
-            {block name='product_features'}
-                {if $product.features}
-                  <section class="product-features">
-                      <h3 class="h6">{l s='Data sheet' d='Shop.Theme.Catalog'}</h3>
-                      <dl class="data-sheet">
-                        {foreach from=$product.features item=feature}
-                            <dt class="name">{$feature.name}</dt>
-                            <dd class="value">{$feature.value}</dd>
-                        {/foreach}
-                      </dl>
-                  </section>
-                {/if}
-            {/block}
-            {* if product have specific references, a table will be added to product details section *}
-            {block name='product_specific_references'}
-                {if isset($product.specific_references)}
-                  <section class="product-features">
-                      <h3 class="h6">{l s='Specific References' d='Shop.Theme.Catalog'}</h3>
-                      <dl class="data-sheet">
-                          {foreach from=$product.specific_references item=reference key=key}
-                            <dt class="name">{$key}</dt>
-                            <dd class="value">{$reference}</dd>
+              {/block}
+              {block name='product_features'}
+                  {if $product.features}
+                    <section class="product-features">
+                        <h3 class="h6">{l s='Data sheet' d='Shop.Theme.Catalog'}</h3>
+                        <dl class="data-sheet">
+                          {foreach from=$product.features item=feature}
+                              <dt class="name">{$feature.name}</dt>
+                              <dd class="value">{$feature.value}</dd>
                           {/foreach}
-                      </dl>
-                  </section>
-                {/if}
-            {/block}
-            {block name='product_condition'}
-                {if $product.condition}
-                  <div class="product-condition">
-                      <label class="label">{l s='Condition' d='Shop.Theme.Catalog'} </label>
-                      <link itemprop="itemCondition" href="{$product.condition.schema_url}"/>
-                      <span>{$product.condition.label}</span>
-                  </div>
-                {/if}
-            {/block}
+                        </dl>
+                    </section>
+                  {/if}
+              {/block}
+              {* if product have specific references, a table will be added to product details section *}
+              {block name='product_specific_references'}
+                  {if isset($product.specific_references)}
+                    <section class="product-features">
+                        <h3 class="h6">{l s='Specific References' d='Shop.Theme.Catalog'}</h3>
+                        <dl class="data-sheet">
+                            {foreach from=$product.specific_references item=reference key=key}
+                              <dt class="name">{$key}</dt>
+                              <dd class="value">{$reference}</dd>
+                            {/foreach}
+                        </dl>
+                    </section>
+                  {/if}
+              {/block}
+              {block name='product_condition'}
+                  {if $product.condition}
+                    <div class="product-condition">
+                        <label class="label">{l s='Condition' d='Shop.Theme.Catalog'} </label>
+                        <link itemprop="itemCondition" href="{$product.condition.schema_url}"/>
+                        <span>{$product.condition.label}</span>
+                    </div>
+                  {/if}
+              {/block} 
+            </div>
         </div>
         </div>
       </div>
@@ -115,8 +124,8 @@
 	<div id="leofeature-product-review" class="card">
     <div class="card-header" role="tab" id="headingdetails">
         <h5 class="h5">
-          <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapsereviews" aria-expanded="false" aria-controls="collapsereviews">
-               {l s='Reviews' d='Shop.Theme.Catalog'}
+          <a class="collapsed leo-product-show-review-title leofeature-accordion" data-toggle="collapse" data-parent="#accordion" href="#collapsereviews" aria-expanded="false" aria-controls="collapsereviews">
+            {l s='Reviews' d='Shop.Theme.Catalog'}
           </a>
         </h5>
     </div>
@@ -145,7 +154,7 @@
                       {foreach from=$product.attachments item=attachment}
                         <div class="attachment">
                             <h4><a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">{$attachment.name}</a></h4>
-                            <p>{$attachment.description}</p
+                            <p>{$attachment.description}</p>
                             <a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">
                              {l s='Download' d='Shop.Theme.Actions'} ({$attachment.file_size_formatted})
                             </a>
