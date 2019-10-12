@@ -18,70 +18,54 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @copyright PrestaShop SA
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
-{block name='head_charset'}
-  <meta charset="utf-8">
-{/block}
-{block name='head_ie_compatibility'}
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-{/block}
-
-{block name='head_seo'}
-  <title>{block name='head_seo_title'}{$page.meta.title}{/block}</title>
-  <meta name="description" content="{block name='head_seo_description'}{$page.meta.description}{/block}">
-  <meta name="keywords" content="{block name='head_seo_keywords'}{$page.meta.keywords}{/block}">
-  {if $page.meta.robots !== 'index'}
-    <meta name="robots" content="{$page.meta.robots}">
-  {/if}
-  {if $page.canonical}
-    <link rel="canonical" href="{$page.canonical}">
-  {/if}
+{block name='header_banner'}
+  <div class="header-banner">
+    {if isset($fullwidth_hook.displayBanner) AND $fullwidth_hook.displayBanner == 0}
+      <div class="container">
+      {/if}
+        <div class="inner">{hook h='displayBanner'}</div>
+    {if isset($fullwidth_hook.displayBanner) AND $fullwidth_hook.displayBanner == 0}
+      </div>
+      {/if}
+  </div>
 {/block}
 
-{block name='head_viewport'}
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+{block name='header_nav'}
+  <nav class="header-nav">
+    <div class="topnav">
+      {if isset($fullwidth_hook.displayNav1) AND $fullwidth_hook.displayNav1 == 0}
+      <div class="container">
+      {/if}
+        <div class="inner">{hook h='displayNav1'}</div>
+      {if isset($fullwidth_hook.displayNav1) AND $fullwidth_hook.displayNav1 == 0}
+      </div>
+      {/if}
+    </div>
+    <div class="bottomnav">
+      {if isset($fullwidth_hook.displayNav2) AND $fullwidth_hook.displayNav2 == 0}
+        <div class="container">
+      {/if}
+        <div class="inner">{hook h='displayNav2'}</div>
+      {if isset($fullwidth_hook.displayNav2) AND $fullwidth_hook.displayNav2 == 0}
+        </div>
+      {/if}
+    </div>
+  </nav>
 {/block}
 
-{block name='head_icons'}
-  <link rel="icon" type="image/vnd.microsoft.icon" href="{$shop.favicon}?{$shop.favicon_update_time}">
-  <link rel="shortcut icon" type="image/x-icon" href="{$shop.favicon}?{$shop.favicon_update_time}">
+{block name='header_top'}
+  <div class="header-top">
+    {if isset($fullwidth_hook.displayTop) AND $fullwidth_hook.displayTop == 0}
+          <div class="container">
+        {/if}
+      <div class="inner">{hook h='displayTop'}</div>
+        {if isset($fullwidth_hook.displayTop) AND $fullwidth_hook.displayTop == 0}
+          </div>
+        {/if}
+  </div>
+  {hook h='displayNavFullWidth'}
 {/block}
-{block name="setting"}
-  {include file="layouts/setting.tpl"}
-{/block}
-{block name='stylesheets'}
-  {include file="_partials/stylesheets.tpl" stylesheets=$stylesheets}
-{/block}
-
-{* LEO - Load Css With Prestashop Standard *}
-{if isset($LOAD_CSS_TYPE) && !$LOAD_CSS_TYPE}
-   
-    {if isset($LEO_CSS)}
-        {foreach from=$LEO_CSS key=css_uri item=media}
-          <link rel="stylesheet" href="{$css_uri}" type="text/css" media="{$media}" />
-        {/foreach}
-    {/if}
-    
-    {if isset($LEO_SKIN_CSS)}
-        {foreach from=$LEO_SKIN_CSS item=linkCss}
-            {$linkCss nofilter}
-        {/foreach}
-    {/if}
-{/if}
-{* LEO LAYOUT *}
-{if isset($LAYOUT_WIDTH)}
-    {$LAYOUT_WIDTH nofilter}
-{/if}
-
-{block name='javascript_head'}
-  {include file="_partials/javascript.tpl" javascript=$javascript.head vars=$js_custom_vars}
-{/block}
-
-{block name='hook_header'}
-  {$HOOK_HEADER nofilter}
-{/block}
-
-{block name='hook_extra'}{/block}
