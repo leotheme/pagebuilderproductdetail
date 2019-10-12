@@ -1,3 +1,10 @@
+{* 
+* @Module Name: AP Page Builder
+* @Website: apollotheme.com - prestashop template provider
+* @author Apollotheme <apollotheme@gmail.com>
+* @copyright Apollotheme
+* @description: ApPageBuilder is module help you can build content for your shop
+*}
 {block name='product_default'}
 <div class="more-info-product">
 	<div id="description">
@@ -6,30 +13,33 @@
        		<div class="product-description">{$product.description nofilter}</div>
      	{/block}
 	</div>
-	<div id="product-detail" data-product="{$product|json_encode}">
+	
+	<div data-product="{$product|json_encode}">
 		<h4 class="title-info-product">{l s='Product Details' d='Shop.Theme.Catalog'}</h4>
-	  	{block name='product_reference'}
-		    {if isset($product_manufacturer->id)}
-		      	<div class="product-manufacturer">
-			        {if isset($manufacturer_image_url)}
-			          	<a href="{$product_brand_url}">
-			            	<img src="{$manufacturer_image_url}" class="img img-thumbnail manufacturer-logo" />
-			          	</a>
-			        {else}
-			          	<label class="label">{l s='Brand' d='Shop.Theme.Catalog'}</label>
-			          	<span>
-			            	<a href="{$product_brand_url}">{$product_manufacturer->name}</a>
-			          	</span>
-			        {/if}
-		      	</div>
-		    {/if}
-		    {if isset($product.reference_to_display)}
-		      	<div class="product-reference">
-			        <label class="label">{l s='Reference' d='Shop.Theme.Catalog'} </label>
-			        <span itemprop="sku">{$product.reference_to_display}</span>
-		      	</div>
-		    {/if}
-	    {/block}
+	  	
+	  	<div id="product-details"> 
+		  	{block name='product_reference'}
+			    {if isset($product_manufacturer->id)}
+			      	<div class="product-manufacturer">
+				        {if isset($manufacturer_image_url)}
+				          	<a href="{$product_brand_url}">
+				            	<img src="{$manufacturer_image_url}" class="img img-thumbnail manufacturer-logo" />
+				          	</a>
+				        {else}
+				          	<label class="label">{l s='Brand' d='Shop.Theme.Catalog'}</label>
+				          	<span>
+				            	<a href="{$product_brand_url}">{$product_manufacturer->name}</a>
+				          	</span>
+				        {/if}
+			      	</div>
+			    {/if}
+			    {if isset($product.reference_to_display)}
+			      	<div class="product-reference">
+				        <label class="label">{l s='Reference' d='Shop.Theme.Catalog'} </label>
+				        <span itemprop="sku">{$product.reference_to_display}</span>
+			      	</div>
+			    {/if}
+		    {/block} 
 	    {block name='product_quantities'}
 	      	{if $product.show_quantities}
 		        <div class="product-quantities">
@@ -87,9 +97,11 @@
 		        </div>
 	      	{/if}
 	    {/block}
+	    
+		</div>
 	</div>
 	<div id="leofeature-product-review">
-		<h4 class="title-info-product">{l s='Reviews' d='Shop.Theme.Catalog'}</h4>
+		<h4 class="title-info-product leo-product-show-review-title">{l s='Reviews' d='Shop.Theme.Catalog'}</h4>
 		{hook h='displayLeoProductTabContent' product=$product}
 	</div>
 	{* Attachments Product Detail *}
@@ -102,7 +114,7 @@
 		           	{foreach from=$product.attachments item=attachment}
 		             	<div class="attachment">
 			               	<h4><a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">{$attachment.name}</a></h4>
-			               	<p>{$attachment.description}</p
+			               	<p>{$attachment.description}</p>
 			               	<a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">
 			                 {l s='Download' d='Shop.Theme.Actions'} ({$attachment.file_size_formatted})
 			               	</a>
