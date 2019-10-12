@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @copyright PrestaShop SA
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
@@ -35,14 +35,14 @@
             {/block}
           </figcaption>
         </figure>
-        <aside {if isset($language.is_rtl) && $language.is_rtl}dir="rtl"{/if} id="thumbnails" class="thumbnails text-sm-center">
+        <aside id="thumbnails" class="thumbnails text-sm-center">
           {block name='product_images'}
             <div class="product-images product-images-{$product.id_product}">
               {foreach from=$product.images item=image}
                 <div class="thumb-container">
-                  <img data-image-large-src="{$image.large.url}" class="thumb img-fluid js-modal-thumb" src="{$image.medium.url}" alt="{$image.legend}" title="{$image.legend}" width="{$image.medium.width}" itemprop="image">
+                  <img data-image-large-src="{$image.large.url}" class="thumb img-fluid js-modal-thumb{if $image.id_image == $product.cover.id_image} selected {/if}" src="{$image.medium.url}" alt="{$image.legend}" title="{$image.legend}" width="{$image.medium.width}" itemprop="image">
                 </div>
-              {/foreach}
+              {/foreach} 
             </div>
           {/block}  
         </aside>
